@@ -184,6 +184,6 @@ Open a Pull Request
 Distributed under the MIT License. See LICENSE file for more information.
 
 📧 Contact
-Your Name -sureshmewada990@gmail.com
+Suresh Mewada -sureshmewada990@gmail.com
 
 Project Link: https://github.com/Suresh-MS07/DevDash
