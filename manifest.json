@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "DevDash - Developer's Dashboard",
+  "version": "1.0",
+  "description": "A personalized new tab dashboard for developers.",
+  "permissions": [
+    "storage"
+  ],
+  "chrome_url_overrides": {
+    "newtab": "dashboard.html"
+  },
+  "options_page": "options.html",
+  "icons": {
+    "48": "icon.png"
+  },
+  "host_permissions": [
+    "https://api.openweathermap.org/",
+    "https://api.github.com/",
+    "https://leetcode-stats-api.herokuapp.com/",
+    "https://dev.to/",
+    "https://hacker-news.firebaseio.com/"
+  ]
+}

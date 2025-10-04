@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DevDash Settings</title>
+    <link rel="stylesheet" href="options.css">
+</head>
+<body>
+    <div class="container">
+        <h1>DevDash Settings</h1>
+        
+        <h2>APIs & Usernames</h2>
+        <div class="form-group">
+            <label for="githubUsername">GitHub Username</label>
+            <input type="text" id="githubUsername" placeholder="e.g., octocat">
+        </div>
+        <div class="form-group">
+            <label for="githubToken">GitHub Personal Access Token</label>
+            <input type="password" id="githubToken" placeholder="Paste your token here">
+            <small>Requires the <strong>'public_repo'</strong> scope.</small>
+        </div>
+        <div class="form-group">
+            <label for="leetcodeUsername">LeetCode Username</label>
+            <input type="text" id="leetcodeUsername" placeholder="e.g., user123">
+        </div>
+        <div class="form-group">
+            <label for="weatherApiKey">OpenWeatherMap API Key</label>
+            <input type="password" id="weatherApiKey" placeholder="Paste your API key here">
+        </div>
+        <div class="form-group">
+            <label for="weatherCity">City for Weather</label>
+            <input type="text" id="weatherCity" placeholder="e.g., Raipur">
+        </div>
+        <div class="form-group">
+            <label for="stackoverflowId">Stack Overflow User ID</label>
+            <input type="text" id="stackoverflowId" placeholder="e.g., 1234567">
+            <small>अपनी प्रोफाइल URL से अपना यूजर आईडी पाएं (e.g., stackoverflow.com/users/<b>1234567</b>/your-name).</small>
+        </div>
+
+        <hr>
+
+        <h2>Widget Settings</h2>
+        <p>दिखाने के लिए विजेट्स चुनें:</p>
+        <div id="widget-visibility-container" class="form-group">
+            </div>
+
+        <hr>
+
+        <h2>Quick Links</h2>
+        <div id="links-container">
+             </div>
+        <div class="add-link-form">
+            <input type="text" id="linkName" placeholder="Link Name">
+            <input type="text" id="linkUrl" placeholder="Link URL (https://...)">
+            <button id="addLinkBtn">+</button>
+        </div>
+
+        <button id="saveButton">Save Settings</button>
+        <div id="statusMessage"></div>
+    </div>
+    <script src="options.js"></script>
+</body>
+</html>

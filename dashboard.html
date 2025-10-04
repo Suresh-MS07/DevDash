@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevDash</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="background-canvas"></canvas>
+    <a href="options.html" target="_blank" class="settings-link" title="Settings">&#9881;</a>
+
+    <main id="dashboard-container">
+        
+        <div id="greeting-widget" class="widget"></div>
+        
+        <div id="weather-widget" class="widget">
+            <h3>Weather</h3>
+            <div id="weather-content" class="widget-content"></div>
+        </div>
+
+        <div id="github-widget" class="widget">
+            <h3><img src="github-icon.png" class="widget-icon"> GitHub Activity</h3>
+            <div id="github-content" class="widget-content"></div>
+        </div>
+
+        <div id="leetcode-widget" class="widget">
+            <h3>LeetCode Stats</h3>
+            <div id="leetcode-content" class="widget-content"></div>
+        </div>
+        
+        <div id="links-widget" class="widget">
+            <h3>Quick Links</h3>
+            <div id="links-content" class="widget-content"></div>
+        </div>
+
+        <div id="devto-widget" class="widget">
+            <h3>Dev.to Feed</h3>
+            <div id="devto-content" class="widget-content"></div>
+        </div>
+
+        <div id="hackernews-widget" class="widget">
+            <h3><img src="hackernews-icon.png" class="widget-icon"> Hacker News</h3>
+            <div id="hackernews-content" class="widget-content"></div>
+        </div>
+
+        <div id="todo-list-widget" class="widget">
+            <h3>To-Do List</h3>
+            <div id="todo-content" class="widget-content">
+                <input type="text" id="todo-input" placeholder="Add a new task...">
+                <ul id="todo-list"></ul>
+            </div>
+        </div>
+        
+        <div id="quick-notes-widget" class="widget">
+            <h3>Quick Notes</h3>
+            <textarea id="quick-notes-content" placeholder="Jot down something..."></textarea>
+        </div>
+
+        <div id="pomodoro-timer-widget" class="widget">
+            <h3>Pomodoro Timer</h3>
+            <div id="pomodoro-content">
+                <div id="pomodoro-timer">25:00</div>
+                <div id="pomodoro-controls">
+                    <button id="pomodoro-start">Start</button>
+                    <button id="pomodoro-reset">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="stack-overflow-widget" class="widget">
+            <h3>Stack Overflow</h3>
+            <div id="stackoverflow-content" class="widget-content"></div>
+        </div>
+
+    </main>
+    <script src="dashboard.js"></script>
+</body>
+</html>

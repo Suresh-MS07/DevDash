@@ -1,0 +1,101 @@
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* सुनिश्चित करता है कि कंटेंट हमेशा वर्टिकली सेंटर में रहे */
+    margin: 0;
+    padding: 20px 0; /* छोटे स्क्रीन पर स्पेस के लिए */
+}
+
+.container {
+    background-color: #1e1e1e;
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 450px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 25px;
+}
+
+h2 {
+    font-size: 1.2rem;
+    color: #aaa;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #444;
+    margin: 25px 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    box-sizing: border-box; /* पैडिंग और बॉर्डर को चौड़ाई में शामिल करता है */
+    font-size: 14px;
+}
+
+input[type="password"] {
+    font-family: monospace; /* पासवर्ड के लिए मोनोस्पेस फॉन्ट */
+}
+
+input[type="color"] {
+    padding: 5px;
+    height: 40px;
+    cursor: pointer;
+}
+
+small {
+    display: block;
+    margin-top: 5px;
+    color: #888;
+    font-size: 12px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#statusMessage {
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+    height: 20px;
+    transition: color 0.5s;
+}
+

@@ -1,0 +1,495 @@
+/* --- Global Styles --- */
+body {
+    font-family: 'Inter', sans-serif; /* Google Fonts से बेहतर फॉन्ट */
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Canvas के लिए */
+    color: #E0E0E0; /* हल्का ग्रे टेक्स्ट */
+    background-color: #121212; /* डार्क बैकग्राउंड */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* पूरी व्यूपोर्ट हाइट */
+    font-size: 1rem;
+}
+
+/* --- Background Canvas --- */
+#background-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* डैशबोर्ड के पीछे */
+    filter: blur(80px) saturate(150%); /* सॉफ्ट ब्लर और कलर बूस्ट */
+    opacity: 0.6; /* थोड़ा पारदर्शी */
+}
+
+/* --- Main Dashboard Container --- */
+#dashboard-container {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 15px; /* ग्रिड आइटम के बीच की दूरी */
+    padding: 20px;
+    max-width: 900px; /* डेस्कटॉप पर अधिकतम चौड़ाई */
+    width: 95%; /* रिस्पॉन्सिव चौड़ाई */
+    box-sizing: border-box;
+    grid-template-columns: repeat(3, 1fr); /* डेस्कटॉप पर 3 कॉलम */
+    grid-auto-rows: minmax(120px, auto); /* न्यूनतम पंक्ति ऊंचाई */
+}
+
+/* --- Widget Base Styles --- */
+.widget {
+    background: rgba(255, 255, 255, 0.08); /* पारदर्शी डार्क बैकग्राउंड */
+    border-radius: 18px; /* गोल कोने */
+    padding: 18px;
+    backdrop-filter: blur(15px); /* कांच जैसा इफ़ेक्ट */
+    -webkit-backdrop-filter: blur(15px); /* Safari सपोर्ट */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* हल्का बॉर्डर */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); /* गहरा शैडो */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #F8F8F8; /* विजेट टेक्स्ट कलर */
+    overflow: hidden; /* सुनिश्चित करें कि सामग्री बाहर न जाए */
+}
+
+.widget h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #FFF;
+}
+
+.widget p, .widget ul, .widget ol {
+    margin: 0;
+    padding: 0;
+    list-style: none; /* डिफ़ॉल्ट लिस्ट स्टाइल हटाएँ */
+}
+
+.widget a {
+    color: #4CAF50; /* हरे रंग के लिंक */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.widget a:hover {
+    color: #66BB6A; /* होवर पर थोड़ा गहरा हरा */
+    text-decoration: underline;
+}
+
+/* --- Specific Widget Styles --- */
+
+/* Greeting Widget */
+#greeting-widget {
+    grid-column: span 3; /* डेस्कटॉप पर पूरी चौड़ाई */
+    text-align: center;
+    padding: 30px 20px;
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(50, 50, 50, 0.9)); /* गहरा ग्रेडिएंट */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+#greeting-widget .time {
+    font-size: 3.5em; /* बड़ा समय */
+    font-weight: 700;
+    line-height: 1;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+}
+#greeting-widget .greeting {
+    font-size: 1.5em;
+    color: #B0B0B0;
+}
+
+/* Weather Widget */
+#weather-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.weather-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 5px;
+}
+.weather-temp {
+    font-size: 2.2em;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+.weather-desc {
+    font-size: 0.9em;
+    color: #B0B0B0;
+    text-transform: capitalize;
+}
+
+/* GitHub & Dev.to List Styling */
+#github-content ul, #devto-content ul, #hackernews-content ol {
+    padding-left: 0;
+    list-style: none;
+}
+#github-content li, #devto-content li, #hackernews-content li {
+    margin-bottom: 8px;
+    font-size: 0.9em;
+    line-height: 1.4;
+    color: #E0E0E0;
+}
+#hackernews-content li small {
+    color: #90CAF9; /* ब्लूish स्कोर */
+}
+
+/* LeetCode Widget */
+.leetcode-stats .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    text-align: center;
+}
+.leetcode-stats .stat-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 5px;
+    border-radius: 10px;
+}
+.leetcode-stats .stat-value {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+.leetcode-stats .stat-label {
+    font-size: 0.8em;
+    color: #B0B0B0;
+}
+
+/* Quick Links */
+#links-content ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+#links-content li {
+    background: rgba(76, 175, 80, 0.2); /* हरे रंग का हल्का बैकग्राउंड */
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    white-space: nowrap; /* लिंक को एक ही लाइन में रखें */
+}
+#links-content li a {
+    color: #A5D6A7; /* हल्का हरा लिंक */
+}
+
+
+/* To-Do List */
+#todo-list {
+    margin-top: 15px;
+    max-height: 180px; /* स्क्रॉलेबल हाइट */
+    overflow-y: auto;
+    padding-right: 5px; /* स्क्रॉलबार के लिए जगह */
+}
+#todo-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+#todo-list li .todo-text {
+    flex-grow: 1;
+    cursor: pointer;
+    font-size: 0.95em;
+}
+#todo-list li .todo-text.completed {
+    text-decoration: line-through;
+    color: #888;
+}
+#todo-input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFF;
+    font-size: 1em;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+#todo-input::placeholder {
+    color: #AAA;
+}
+.delete-btn {
+    background: none;
+    border: none;
+    color: #EF5350; /* लाल रंग */
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 0 5px;
+    transition: color 0.3s ease;
+}
+.delete-btn:hover {
+    color: #E57373;
+}
+
+
+/* --- Responsive Adjustments (Mobile-like Layout) --- */
+@media (max-width: 768px) {
+    body {
+        font-size: 0.9rem; /* छोटी स्क्रीन पर छोटा फॉन्ट */
+    }
+
+    #dashboard-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 कॉलम का लेआउट */
+        padding: 15px;
+        gap: 10px;
+    }
+
+    #greeting-widget {
+        grid-column: span 2; /* छोटी स्क्रीन पर भी पूरी चौड़ाई */
+        padding: 20px 15px;
+    }
+    #greeting-widget .time {
+        font-size: 3em;
+    }
+    #greeting-widget .greeting {
+        font-size: 1.2em;
+    }
+
+    .widget {
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .widget h3 {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
+
+    #todo-input {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    #dashboard-container {
+        grid-template-columns: 1fr; /* सबसे छोटी स्क्रीन पर 1 कॉलम */
+        padding: 10px;
+        gap: 8px;
+    }
+
+    #greeting-widget {
+        grid-column: span 1;
+        padding: 18px 10px;
+    }
+    #greeting-widget .time {
+        font-size: 2.5em;
+    }
+    #greeting-widget .greeting {
+        font-size: 1em;
+    }
+
+    .widget {
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .widget h3 {
+        font-size: 0.9em;
+        margin-bottom: 8px;
+    }
+}
+
+/* Scrollbar Styling for webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+/* --- Global Styles --- */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    color: #E0E0E0;
+    background-color: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+/* --- Background Canvas --- */
+#background-canvas {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    filter: blur(80px) saturate(150%);
+    opacity: 0.6;
+}
+/* --- Main Dashboard Container --- */
+main#dashboard-container {
+    position: relative; z-index: 1; display: grid;
+    gap: 15px; padding: 20px; max-width: 1400px; width: 95%;
+    box-sizing: border-box;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: minmax(150px, auto);
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+/* --- Widget Base Styles --- */
+.widget {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 18px; padding: 18px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+}
+.widget.hidden { display: none !important; } /* Hide widget class */
+.widget h3 { margin: 0 0 15px 0; font-size: 1.1em; font-weight: 600; color: #FFF; }
+.widget-content { flex-grow: 1; overflow-y: auto; }
+/* ... (Existing styles for links, lists etc.) ... */
+/* --- New Widget Styles --- */
+/* Quick Notes */
+#quick-notes-content {
+    width: 100%; flex-grow: 1; background: transparent;
+    border: none; color: #e0e0e0; resize: none; font-size: 0.95em;
+    padding: 0;
+}
+#quick-notes-content:focus { outline: none; }
+/* Pomodoro Timer */
+#pomodoro-content {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100%;
+}
+#pomodoro-timer { font-size: 3.5em; font-weight: 700; }
+#pomodoro-controls button {
+    background: rgba(255, 255, 255, 0.1); border: none; color: white;
+    padding: 8px 16px; margin: 5px; border-radius: 8px; cursor: pointer;
+}
+/* Stack Overflow */
+#stackoverflow-content .so-stats {
+    display: flex; justify-content: space-around; align-items: center; height: 100%;
+}
+.so-stat { text-align: center; }
+.so-stat-value { font-size: 1.8em; font-weight: 600; }
+.so-stat-label { font-size: 0.9em; color: #B0B0B0; }
+/* Settings Link */
+.settings-link {
+    position: fixed; top: 20px; right: 20px; z-index: 100;
+    color: white; text-decoration: none; font-size: 24px;
+}
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+/* --- Global Styles --- */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    color: #E0E0E0;
+    background-color: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+/* --- Background Canvas --- */
+#background-canvas {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    filter: blur(80px) saturate(150%);
+    opacity: 0.6;
+}
+/* --- Main Dashboard Container --- */
+main#dashboard-container {
+    position: relative; z-index: 1; display: grid;
+    gap: 15px; padding: 20px; max-width: 1400px; width: 95%;
+    box-sizing: border-box;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: minmax(150px, auto);
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+/* --- Widget Base Styles --- */
+.widget {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 18px; padding: 18px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+}
+.widget.hidden { display: none !important; }
+.widget h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+}
+
+.widget-icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+}
+
+.widget-content { flex-grow: 1; overflow-y: auto; }
+
+/* ... (Existing styles for links, lists etc.) ... */
+
+/* --- New Widget Styles --- */
+/* Quick Notes */
+#quick-notes-content {
+    width: 100%; flex-grow: 1; background: transparent;
+    border: none; color: #e0e0e0; resize: none; font-size: 0.95em;
+    padding: 0;
+}
+#quick-notes-content:focus { outline: none; }
+/* Pomodoro Timer */
+#pomodoro-content {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100%;
+}
+#pomodoro-timer { font-size: 3.5em; font-weight: 700; }
+#pomodoro-controls button {
+    background: rgba(255, 255, 255, 0.1); border: none; color: white;
+    padding: 8px 16px; margin: 5px; border-radius: 8px; cursor: pointer;
+}
+/* Stack Overflow */
+#stackoverflow-content .so-stats {
+    display: flex; justify-content: space-around; align-items: center; height: 100%;
+}
+.so-stat { text-align: center; }
+.so-stat-value { font-size: 1.8em; font-weight: 600; }
+.so-stat-label { font-size: 0.9em; color: #B0B0B0; }
+/* Settings Link */
+.settings-link {
+    position: fixed; top: 20px; right: 20px; z-index: 100;
+    color: white; text-decoration: none; font-size: 24px;
+}
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
