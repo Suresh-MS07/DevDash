@@ -1,5 +1,5 @@
 <div align="center">
-<img src="icon.jpg" alt="DevDash Logo" width="150px" />
+<img src="icon.png" alt="DevDash Logo" width="150px" />
 <h1 align="center">DevDash: The Ultimate Developer's Dashboard</h1>
 <p align="center">
 Transform your browser's new tab page into a stunning, personalized command center for all your development activities.
@@ -7,9 +7,9 @@ Transform your browser's new tab page into a stunning, personalized command cent
 <a href="#-about-the-project"><strong>Explore the features »</strong></a>
 <br />
 <br />
-<a href="https://www.google.com/search?q=https://github.com/your-username/DevDash/issues">Report Bug</a>
+<a href="https://www.google.com/search?q=https://github.com/Suresh-MS07/DevDash/issues">Report Bug</a>
 ·
-<a href="https://www.google.com/search?q=https://github.com/your-username/DevDash/issues">Request Feature</a>
+<a href="https://www.google.com/search?q=https://github.com/Suresh-MS07/DevDash/issues">Request Feature</a>
 </p>
 </div>
 
