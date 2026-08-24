@@ -1,189 +1,145 @@
 <div align="center">
-<img src="icon.png" alt="DevDash Logo" width="150px" />
-<h1 align="center">DevDash: The Ultimate Developer's Dashboard</h1>
-<p align="center">
-Transform your browser's new tab page into a stunning, personalized command center for all your development activities.
-<br />
-<a href="#-about-the-project"><strong>Explore the features »</strong></a>
-<br />
-<br />
-<a href="https://www.google.com/search?q=https://github.com/Suresh-MS07/DevDash/issues">Report Bug</a>
-·
-<a href="https://www.google.com/search?q=https://github.com/Suresh-MS07/DevDash/issues">Request Feature</a>
-</p>
+  <img src="icon.png" alt="DevDash logo" width="112">
+  <h1>DevDash</h1>
+  <p>A privacy-conscious developer command center for every new browser tab.</p>
+
+  [![CI](https://github.com/Suresh-MS07/DevDash/actions/workflows/ci.yml/badge.svg)](https://github.com/Suresh-MS07/DevDash/actions/workflows/ci.yml)
+  [![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
+  [![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?logo=javascript&logoColor=111)](https://developer.mozilla.org/docs/Web/JavaScript)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-74f2ce.svg)](LICENSE)
+
+  [Report a bug](https://github.com/Suresh-MS07/DevDash/issues/new) · [Request a feature](https://github.com/Suresh-MS07/DevDash/issues/new) · [View repository](https://github.com/Suresh-MS07/DevDash)
 </div>
 
-<!-- Badges -->
+## Overview
 
-<div align="center">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/JavaScript-ES6%252B-yellow.svg" alt="JavaScript">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/HTML5-E34F26.svg%3Fstyle%3Dflat%26logo%3Dhtml5%26logoColor%3Dwhite" alt="HTML5">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/CSS3-1572B6.svg%3Fstyle%3Dflat%26logo%3Dcss3%26logoColor%3Dwhite" alt="CSS3">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Manifest-V3-orange.svg" alt="Manifest V3">
-<img src="https://www.google.com/search?q=https://img.shields.io/github/license/your-username/DevDash" alt="License">
-</div>
+DevDash replaces the default Chromium new tab with a responsive dashboard for coding activity, technical news, focus, and lightweight planning. It is built with vanilla HTML, CSS, and JavaScript on Chrome Extension Manifest V3—there is no build step and no runtime dependency.
 
-<!-- Table of Contents -->
+## Features
 
-<details>
-<summary>Table of Contents</summary>
-<ol>
-<li><a href="#-about-the-project">About The Project</a></li>
-<li><a href="#-key-features">Key Features</a></li>
-<li><a href="#-built-with">Built With</a></li>
-<li><a href="#-getting-started">Getting Started</a>
-<ul>
-<li><a href="#prerequisites">Prerequisites</a></li>
-<li><a href="#installation--setup">Installation & Setup</a></li>
-</ul>
-</li>
-<li><a href="#-configuration">Configuration</a></li>
-<li><a href="#-project-structure">Project Structure</a></li>
-<li><a href="#-contributing">Contributing</a></li>
-<li><a href="#-license">License</a></li>
-<li><a href="#-contact">Contact</a></li>
-</ol>
-</details>
+### Developer activity
 
-✨ About The Project
-DevDash is not just another new tab extension. It's a meticulously crafted, all-in-one dashboard designed to streamline the modern developer's workflow. By integrating essential services like GitHub, LeetCode, and Stack Overflow with powerful productivity tools, DevDash centralizes your digital life, saving you time and keeping you focused.
+- Public GitHub activity without requiring a personal access token
+- LeetCode totals split by Easy, Medium, and Hard
+- Stack Overflow reputation and badge counts
+- Curated Dev.to articles and Hacker News stories
 
-Its elegant glassmorphism UI and fluid design provide a visually pleasing experience, turning a mundane new tab into a hub of information and productivity.
+### Focus and productivity
 
-(Pro Tip: Replace the placeholder above with a real screenshot of your awesome dashboard!)
+- Weather for a configured city
+- Custom quick links with URL validation
+- Persistent to-do list and quick notes
+- 25-minute Pomodoro timer
+- Per-widget visibility controls
 
-🚀 Key Features
-API-Driven Widgets
-🌤️ Live Weather: Real-time weather updates for any city.
+### Reliability and privacy
 
-👨‍💻 GitHub Activity: Stay updated with your latest public repository events.
+- API caching with service-specific expiration windows
+- Stale-cache fallback during temporary API failures
+- 12-second network timeout to prevent hanging widgets
+- User-generated and API content rendered with safe DOM APIs
+- OpenWeatherMap key stored only in local extension storage
+- No analytics, tracking scripts, remote JavaScript, or GitHub token
 
-💻 LeetCode Stats: Track your problem-solving progress across Easy, Medium, and Hard difficulties.
+## Install locally
 
-❔ Stack Overflow: Display your reputation and badge counts with pride.
+1. Clone the repository:
 
-📰 Developer News: Curated feeds from Hacker News and Dev.to to keep you in the loop.
+   ```bash
+   git clone https://github.com/Suresh-MS07/DevDash.git
+   cd DevDash
+   ```
 
-Productivity Suite
-✅ To-Do List: A simple yet effective task manager with local persistence.
+2. Open `chrome://extensions` in Chrome, Edge, Brave, or another Chromium browser.
+3. Enable **Developer mode**.
+4. Select **Load unpacked** and choose the cloned `DevDash` directory.
+5. Open a new tab, then use the settings button to configure your widgets.
 
-📝 Quick Notes: A handy scratchpad for jotting down thoughts, reminders, or code snippets.
+## Configuration
 
-🍅 Pomodoro Timer: Boost your focus and manage your time effectively with a built-in Pomodoro timer.
+| Setting | Required for | Storage |
+|---|---|---|
+| GitHub username | Public activity | Synced |
+| LeetCode username | Problem statistics | Synced |
+| Weather city | Weather widget | Synced |
+| OpenWeatherMap API key | Weather widget | Local device only |
+| Stack Overflow user ID | Reputation and badges | Synced |
+| Quick links and visibility | Personalization | Synced |
+| To-dos, notes, and API cache | Local productivity | Local device only |
 
-🔗 Quick Links: Customizable shortcuts to your most frequently visited sites.
+You can create a free weather key at [OpenWeatherMap](https://openweathermap.org/api). The GitHub widget uses the public Events API and does not request repository permissions.
 
-Customization & Performance
-🎨 Customizable Layout: Enable or disable widgets to create a dashboard that's uniquely yours.
+## Architecture
 
-⚡ Efficient Caching: Smart data caching mechanism reduces API calls, ensuring lightning-fast load times.
+```text
+dashboard.html / dashboard.css
+        │
+        └── dashboard.js
+             ├── API widgets + cache layer
+             ├── local productivity widgets
+             └── visibility preferences
 
-💎 Modern UI/UX: A beautiful and responsive "glassmorphism" design that looks great on any screen size.
+options.html / options.css
+        │
+        └── options.js
+             ├── settings validation
+             ├── secret migration to local storage
+             └── cache management
+```
 
-🛠️ Built With
-This project is built with modern web technologies and leverages several third-party APIs.
+## Project structure
 
-Core: HTML5, CSS3, JavaScript (ES6+)
-
-Browser Integration: Chrome Extension Manifest V3, chrome.storage API
-
-APIs:
-
-OpenWeatherMap API
-
-GitHub API
-
-LeetCode API (Unofficial)
-
-Hacker News (Firebase) API
-
-Stack Exchange API
-
-Dev.to API
-
-🏁 Getting Started
-Follow these instructions to get a local copy up and running.
-
-Prerequisites
-A Chromium-based browser (e.g., Google Chrome, Brave, Microsoft Edge).
-
-git installed on your local machine.
-
-Installation & Setup
-Clone the repository:
-
-git clone [https://github.com/your-username/DevDash.git](https://github.com/Suresh-MS07/DevDash.git)
-
-Navigate to the browser's extension management page:
-
-Open chrome://extensions (or your browser's equivalent).
-
-Enable Developer Mode:
-
-Toggle the "Developer mode" switch, usually located in the top-right corner.
-
-Load the extension:
-
-Click on the "Load unpacked" button.
-
-Select the DevDash folder that you cloned.
-
-You're all set! Open a new tab to experience your DevDash.
-
-⚙️ Configuration
-To unlock the full power of DevDash, you need to configure the API keys and usernames in the settings panel.
-
-Open a new tab to view the DevDash dashboard.
-
-Click the Settings icon (⚙️) in the top-right corner.
-
-Fill in the required fields:
-
-GitHub: Your username and a Personal Access Token with public_repo scope.
-
-LeetCode: Your LeetCode username.
-
-OpenWeatherMap: A free API key from their website.
-
-Stack Overflow: Your User ID (found in your profile URL).
-
-Customize widget visibility and add your personal quick links.
-
-Click "Save Settings" and enjoy your personalized dashboard!
-
-📂 Project Structure
-A brief overview of the project's file structure.
-
+```text
 .
-├── 📄 dashboard.html      # The main dashboard page markup
-├── 🎨 dashboard.css       # Core styles for the dashboard UI/UX
-├── ⚙️ dashboard.js        # Main application logic, API fetching, and widget rendering
-├── 📄 options.html         # The settings page markup
-├── 🎨 options.css          # Styles for the settings page
-├── ⚙️ options.js          # Logic for saving/loading user settings
-├── 📄 manifest.json       # The heart of the extension, defines permissions and behavior
-├── 🖼️ icon.jpg            # Main application icon
-└── 📄 README.md           # You are here!
+├── .github/workflows/ci.yml
+├── scripts/validate.mjs
+├── dashboard.html
+├── dashboard.css
+├── dashboard.js
+├── options.html
+├── options.css
+├── options.js
+├── manifest.json
+├── icon.png
+├── package.json
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── LICENSE
+└── README.md
+```
 
-🤝 Contributing
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
+## Development and validation
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+DevDash has no production dependencies. Node.js is used only for repository checks.
 
-Fork the Project
+```bash
+npm test
+```
 
-Create your Feature Branch (git checkout -b feature/AmazingFeature)
+The validation command checks JavaScript syntax, Manifest V3 configuration, required files, API host permissions, placeholder links, and unsafe HTML injection patterns. The same command runs in GitHub Actions on pushes and pull requests.
 
-Commit your Changes (git commit -m 'Add some AmazingFeature')
+## API and cache behavior
 
-Push to the Branch (git push origin feature/AmazingFeature)
+| Service | Cache duration |
+|---|---:|
+| GitHub | 5 minutes |
+| Hacker News | 10 minutes |
+| Weather / Dev.to | 15 minutes |
+| LeetCode / Stack Overflow | 1 hour |
 
-Open a Pull Request
+If a request fails but an older cache entry exists, DevDash shows the cached response instead of leaving the widget blank.
 
-📄 License
-Distributed under the MIT License. See LICENSE file for more information.
+## Contributing
 
-📧 Contact
-Suresh Mewada -sureshmewada990@gmail.com
+Bug fixes, accessibility improvements, documentation, and new widgets are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
-Project Link: https://github.com/Suresh-MS07/DevDash
+For security concerns, follow the private reporting instructions in [SECURITY.md](SECURITY.md) instead of opening a public issue.
+
+## License
+
+Distributed under the [MIT License](LICENSE).
+
+## Author
+
+**Suresh Mewada**  
+[GitHub](https://github.com/Suresh-MS07) · [LinkedIn](https://www.linkedin.com/in/suresh-mewada07/) · [Email](mailto:sureshmewada990@gmail.com)

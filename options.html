@@ -1,63 +1,83 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>DevDash Settings</title>
-    <link rel="stylesheet" href="options.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>DevDash Settings</title>
+  <link rel="stylesheet" href="options.css">
 </head>
 <body>
-    <div class="container">
+  <main class="container">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">PERSONALIZE YOUR NEW TAB</p>
         <h1>DevDash Settings</h1>
-        
-        <h2>APIs & Usernames</h2>
-        <div class="form-group">
-            <label for="githubUsername">GitHub Username</label>
-            <input type="text" id="githubUsername" placeholder="e.g., octocat">
-        </div>
-        <div class="form-group">
-            <label for="githubToken">GitHub Personal Access Token</label>
-            <input type="password" id="githubToken" placeholder="Paste your token here">
-            <small>Requires the <strong>'public_repo'</strong> scope.</small>
-        </div>
-        <div class="form-group">
-            <label for="leetcodeUsername">LeetCode Username</label>
-            <input type="text" id="leetcodeUsername" placeholder="e.g., user123">
-        </div>
-        <div class="form-group">
-            <label for="weatherApiKey">OpenWeatherMap API Key</label>
-            <input type="password" id="weatherApiKey" placeholder="Paste your API key here">
-        </div>
-        <div class="form-group">
-            <label for="weatherCity">City for Weather</label>
-            <input type="text" id="weatherCity" placeholder="e.g., Raipur">
-        </div>
-        <div class="form-group">
-            <label for="stackoverflowId">Stack Overflow User ID</label>
-            <input type="text" id="stackoverflowId" placeholder="e.g., 1234567">
-            <small>अपनी प्रोफाइल URL से अपना यूजर आईडी पाएं (e.g., stackoverflow.com/users/<b>1234567</b>/your-name).</small>
-        </div>
+        <p>Configure only the widgets you use. DevDash does not require a GitHub token.</p>
+      </div>
+      <a class="dashboard-link" href="dashboard.html">Open dashboard ↗</a>
+    </header>
 
-        <hr>
+    <form id="settings-form">
+      <section class="settings-card">
+        <h2>Profiles and APIs</h2>
+        <div class="form-grid">
+          <label>
+            <span>GitHub username</span>
+            <input type="text" id="githubUsername" maxlength="39" autocomplete="off" placeholder="octocat">
+            <small>Used only to load public activity.</small>
+          </label>
+          <label>
+            <span>LeetCode username</span>
+            <input type="text" id="leetcodeUsername" maxlength="50" autocomplete="off" placeholder="user123">
+          </label>
+          <label>
+            <span>Weather city</span>
+            <input type="text" id="weatherCity" maxlength="80" autocomplete="off" placeholder="Raipur">
+          </label>
+          <label>
+            <span>OpenWeatherMap API key</span>
+            <input type="password" id="weatherApiKey" autocomplete="off" placeholder="Stored only on this device">
+            <small>This secret stays in local extension storage and is not synced.</small>
+          </label>
+          <label>
+            <span>Stack Overflow user ID</span>
+            <input type="text" id="stackoverflowId" inputmode="numeric" maxlength="20" autocomplete="off" placeholder="1234567">
+          </label>
+        </div>
+      </section>
 
-        <h2>Widget Settings</h2>
-        <p>दिखाने के लिए विजेट्स चुनें:</p>
-        <div id="widget-visibility-container" class="form-group">
-            </div>
+      <section class="settings-card">
+        <h2>Visible widgets</h2>
+        <p class="section-copy">Choose what appears on your dashboard.</p>
+        <div id="widget-visibility-container" class="checkbox-grid"></div>
+      </section>
 
-        <hr>
-
-        <h2>Quick Links</h2>
-        <div id="links-container">
-             </div>
+      <section class="settings-card">
+        <h2>Quick links</h2>
+        <div id="links-container" class="saved-links"></div>
         <div class="add-link-form">
-            <input type="text" id="linkName" placeholder="Link Name">
-            <input type="text" id="linkUrl" placeholder="Link URL (https://...)">
-            <button id="addLinkBtn">+</button>
+          <label>
+            <span>Label</span>
+            <input type="text" id="linkName" maxlength="40" placeholder="Portfolio">
+          </label>
+          <label>
+            <span>URL</span>
+            <input type="url" id="linkUrl" maxlength="500" placeholder="https://example.com">
+          </label>
+          <button id="addLinkBtn" class="button-secondary" type="button">Add link</button>
         </div>
+        <p id="linkError" class="field-error" role="alert"></p>
+      </section>
 
-        <button id="saveButton">Save Settings</button>
-        <div id="statusMessage"></div>
-    </div>
-    <script src="options.js"></script>
+      <div class="form-actions">
+        <button id="saveButton" type="submit">Save settings</button>
+        <button id="clearCacheButton" class="button-secondary" type="button">Clear API cache</button>
+      </div>
+      <div id="statusMessage" role="status" aria-live="polite"></div>
+    </form>
+  </main>
+
+  <script src="options.js"></script>
 </body>
 </html>

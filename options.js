@@ -1,125 +1,224 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Element Selectors ---
-    const githubUserInput = document.getElementById('githubUsername');
-    const githubTokenInput = document.getElementById('githubToken');
-    const leetcodeInput = document.getElementById('leetcodeUsername');
-    const weatherApiKeyInput = document.getElementById('weatherApiKey');
-    const weatherCityInput = document.getElementById('weatherCity');
-    const stackoverflowIdInput = document.getElementById('stackoverflowId');
-    const widgetVisibilityContainer = document.getElementById('widget-visibility-container');
-    
-    const saveButton = document.getElementById('saveButton');
-    const statusMessage = document.getElementById('statusMessage');
+  'use strict';
 
-    // Quick Links Elements
-    const addLinkBtn = document.getElementById('addLinkBtn');
-    const linkNameInput = document.getElementById('linkName');
-    const linkUrlInput = document.getElementById('linkUrl');
-    const linksContainer = document.getElementById('links-container');
-    
-    let bookmarks = [];
+  const $ = (id) => document.getElementById(id);
+  const form = $('settings-form');
+  const fields = {
+    githubUsername: $('githubUsername'),
+    leetcodeUsername: $('leetcodeUsername'),
+    weatherCity: $('weatherCity'),
+    weatherApiKey: $('weatherApiKey'),
+    stackoverflowId: $('stackoverflowId')
+  };
+  const visibilityContainer = $('widget-visibility-container');
+  const linksContainer = $('links-container');
+  const linkName = $('linkName');
+  const linkUrl = $('linkUrl');
+  const linkError = $('linkError');
+  const addLinkButton = $('addLinkBtn');
+  const clearCacheButton = $('clearCacheButton');
+  const statusMessage = $('statusMessage');
 
-    // --- Widget Visibility ---
-    const WIDGETS = [
-        'Weather', 'GitHub', 'LeetCode', 'Dev.to', 'Hacker News', 
-        'Quick Links', 'To-Do List', 'Quick Notes', 'Pomodoro Timer', 'Stack Overflow'
-    ];
+  const WIDGETS = [
+    { id: 'weather', label: 'Weather' },
+    { id: 'github', label: 'GitHub' },
+    { id: 'leetcode', label: 'LeetCode' },
+    { id: 'links', label: 'Quick Links' },
+    { id: 'devto', label: 'Dev.to' },
+    { id: 'hackernews', label: 'Hacker News' },
+    { id: 'todo-list', label: 'To-Do List' },
+    { id: 'quick-notes', label: 'Quick Notes' },
+    { id: 'pomodoro-timer', label: 'Pomodoro' },
+    { id: 'stack-overflow', label: 'Stack Overflow' }
+  ];
 
-    function renderWidgetCheckboxes(settings) {
-        widgetVisibilityContainer.innerHTML = '';
-        WIDGETS.forEach(widgetName => {
-            const widgetId = widgetName.toLowerCase().replace(/ /g, '-').replace(/\./g, '');
-            const isChecked = settings[widgetId] !== false; // Default to true if not set
-            
-            const label = document.createElement('label');
-            label.className = 'checkbox-label';
-            label.innerHTML = `
-                <input type="checkbox" id="toggle-${widgetId}" data-widget-id="${widgetId}" ${isChecked ? 'checked' : ''}>
-                ${widgetName}
-            `;
-            widgetVisibilityContainer.appendChild(label);
-        });
-    }
+  let bookmarks = [];
+  let statusTimer;
 
-    // --- Bookmarks Management --- (No changes here)
-    function renderBookmarks() {
-        linksContainer.innerHTML = '';
-        bookmarks.forEach((bookmark, index) => {
-            const linkEl = document.createElement('div');
-            linkEl.className = 'link-item';
-            linkEl.innerHTML = `<span>${bookmark.name}</span><button class="delete-link-btn" data-index="${index}">×</button>`;
-            linksContainer.appendChild(linkEl);
-        });
-        document.querySelectorAll('.delete-link-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const index = e.target.getAttribute('data-index');
-                bookmarks.splice(index, 1);
-                renderBookmarks();
-            });
-        });
-    }
-    addLinkBtn.addEventListener('click', () => {
-        const name = linkNameInput.value.trim();
-        let url = linkUrlInput.value.trim();
-        if (name && url) {
-            if (!/^https?:\/\//i.test(url)) {
-                url = 'https://' + url;
-            }
-            bookmarks.push({ name, url });
-            linkNameInput.value = '';
-            linkUrlInput.value = '';
-            renderBookmarks();
-        }
+  function createElement(tag, options = {}) {
+    const node = document.createElement(tag);
+    if (options.className) node.className = options.className;
+    if (options.text !== undefined) node.textContent = String(options.text);
+    return node;
+  }
+
+  function showStatus(message, isError = false) {
+    clearTimeout(statusTimer);
+    statusMessage.textContent = message;
+    statusMessage.style.color = isError ? '#ff8a98' : '';
+    statusTimer = setTimeout(() => {
+      statusMessage.textContent = '';
+      statusMessage.style.color = '';
+    }, 3500);
+  }
+
+  function normalizeUrl(value) {
+    let candidate = String(value || '').trim();
+    if (!candidate) throw new Error('Enter a link URL.');
+    if (!/^https?:\/\//i.test(candidate)) candidate = `https://${candidate}`;
+    const parsed = new URL(candidate);
+    if (!['https:', 'http:'].includes(parsed.protocol)) throw new Error('Only HTTP and HTTPS links are allowed.');
+    return parsed.href;
+  }
+
+  function renderWidgetCheckboxes(visibility = {}) {
+    visibilityContainer.replaceChildren();
+    WIDGETS.forEach(({ id, label }) => {
+      const wrapper = createElement('label', { className: 'checkbox-label' });
+      const checkbox = createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.dataset.widgetId = id;
+      checkbox.checked = visibility[id] !== false;
+      wrapper.append(checkbox, createElement('span', { text: label }));
+      visibilityContainer.appendChild(wrapper);
     });
+  }
 
-    // --- Main Settings Functions ---
-    function loadSettings() {
-        const keysToGet = [
-            'githubUsername', 'githubToken', 'leetcodeUsername', 'weatherApiKey', 'weatherCity', 
-            'stackoverflowId', 'bookmarks', 'widgetVisibility'
-        ];
-        chrome.storage.sync.get(keysToGet, (result) => {
-            if (result.githubUsername) githubUserInput.value = result.githubUsername;
-            if (result.githubToken) githubTokenInput.value = result.githubToken;
-            if (result.leetcodeUsername) leetcodeInput.value = result.leetcodeUsername;
-            if (result.weatherApiKey) weatherApiKeyInput.value = result.weatherApiKey;
-            if (result.weatherCity) weatherCityInput.value = result.weatherCity;
-            if (result.stackoverflowId) stackoverflowIdInput.value = result.stackoverflowId;
-            
-            if (result.bookmarks) {
-                bookmarks = result.bookmarks;
-                renderBookmarks();
-            }
-
-            renderWidgetCheckboxes(result.widgetVisibility || {});
-        });
+  function renderBookmarks() {
+    linksContainer.replaceChildren();
+    if (bookmarks.length === 0) {
+      linksContainer.appendChild(createElement('p', { className: 'section-copy', text: 'No quick links added yet.' }));
+      return;
     }
 
-    function saveSettings() {
-        // Get widget visibility settings
-        const widgetVisibility = {};
-        document.querySelectorAll('#widget-visibility-container input[type="checkbox"]').forEach(checkbox => {
-            widgetVisibility[checkbox.dataset.widgetId] = checkbox.checked;
-        });
+    bookmarks.forEach((bookmark, index) => {
+      const item = createElement('div', { className: 'link-item' });
+      item.appendChild(createElement('span', {
+        className: 'link-item-text',
+        text: `${bookmark.name} — ${bookmark.url}`
+      }));
+      const remove = createElement('button', { className: 'delete-link-btn', text: '×' });
+      remove.type = 'button';
+      remove.setAttribute('aria-label', `Remove ${bookmark.name}`);
+      remove.addEventListener('click', () => {
+        bookmarks.splice(index, 1);
+        renderBookmarks();
+      });
+      item.appendChild(remove);
+      linksContainer.appendChild(item);
+    });
+  }
 
-        const settingsToSave = {
-            githubUsername: githubUserInput.value.trim(),
-            githubToken: githubTokenInput.value.trim(),
-            leetcodeUsername: leetcodeInput.value.trim(),
-            weatherApiKey: weatherApiKeyInput.value.trim(),
-            weatherCity: weatherCityInput.value.trim(),
-            stackoverflowId: stackoverflowIdInput.value.trim(),
-            bookmarks: bookmarks,
-            widgetVisibility: widgetVisibility
-        };
-
-        chrome.storage.sync.set(settingsToSave, () => {
-            statusMessage.textContent = 'Settings saved successfully!';
-            setTimeout(() => { statusMessage.textContent = ''; }, 3000);
-        });
+  function addBookmark() {
+    linkError.textContent = '';
+    const name = linkName.value.trim();
+    if (!name) {
+      linkError.textContent = 'Enter a label for the link.';
+      return;
+    }
+    if (bookmarks.length >= 20) {
+      linkError.textContent = 'You can save up to 20 quick links.';
+      return;
     }
 
-    // --- Initializer ---
-    saveButton.addEventListener('click', saveSettings);
-    loadSettings();
+    try {
+      const url = normalizeUrl(linkUrl.value);
+      if (bookmarks.some((bookmark) => bookmark.url === url)) {
+        linkError.textContent = 'This URL is already in your quick links.';
+        return;
+      }
+      bookmarks.push({ name: name.slice(0, 40), url });
+      linkName.value = '';
+      linkUrl.value = '';
+      renderBookmarks();
+    } catch (error) {
+      linkError.textContent = error.message;
+    }
+  }
+
+  async function migrateLegacySecrets(syncSettings, localSettings) {
+    if (!localSettings.weatherApiKey && syncSettings.weatherApiKey) {
+      await chrome.storage.local.set({ weatherApiKey: syncSettings.weatherApiKey });
+      fields.weatherApiKey.value = syncSettings.weatherApiKey;
+    }
+
+    const legacyKeys = [];
+    if (syncSettings.weatherApiKey) legacyKeys.push('weatherApiKey');
+    if (syncSettings.githubToken) legacyKeys.push('githubToken');
+    if (legacyKeys.length > 0) await chrome.storage.sync.remove(legacyKeys);
+  }
+
+  async function loadSettings() {
+    const [syncSettings, localSettings] = await Promise.all([
+      chrome.storage.sync.get([
+        'githubUsername',
+        'githubToken',
+        'leetcodeUsername',
+        'weatherApiKey',
+        'weatherCity',
+        'stackoverflowId',
+        'bookmarks',
+        'widgetVisibility'
+      ]),
+      chrome.storage.local.get('weatherApiKey')
+    ]);
+
+    fields.githubUsername.value = syncSettings.githubUsername || '';
+    fields.leetcodeUsername.value = syncSettings.leetcodeUsername || '';
+    fields.weatherCity.value = syncSettings.weatherCity || '';
+    fields.weatherApiKey.value = localSettings.weatherApiKey || '';
+    fields.stackoverflowId.value = syncSettings.stackoverflowId || '';
+    bookmarks = Array.isArray(syncSettings.bookmarks) ? syncSettings.bookmarks.slice(0, 20) : [];
+
+    renderBookmarks();
+    renderWidgetCheckboxes(syncSettings.widgetVisibility || {});
+    await migrateLegacySecrets(syncSettings, localSettings);
+  }
+
+  function validateProfiles() {
+    const githubUsername = fields.githubUsername.value.trim();
+    const stackoverflowId = fields.stackoverflowId.value.trim();
+    if (githubUsername && !/^(?!-)[a-z\d-]{1,39}(?<!-)$/i.test(githubUsername)) {
+      throw new Error('Enter a valid GitHub username.');
+    }
+    if (stackoverflowId && !/^\d+$/.test(stackoverflowId)) {
+      throw new Error('Stack Overflow user ID must contain only numbers.');
+    }
+  }
+
+  async function saveSettings(event) {
+    event.preventDefault();
+    try {
+      validateProfiles();
+      const widgetVisibility = {};
+      visibilityContainer.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+        widgetVisibility[checkbox.dataset.widgetId] = checkbox.checked;
+      });
+
+      await chrome.storage.sync.set({
+        githubUsername: fields.githubUsername.value.trim(),
+        leetcodeUsername: fields.leetcodeUsername.value.trim(),
+        weatherCity: fields.weatherCity.value.trim(),
+        stackoverflowId: fields.stackoverflowId.value.trim(),
+        bookmarks,
+        widgetVisibility
+      });
+
+      const weatherApiKey = fields.weatherApiKey.value.trim();
+      if (weatherApiKey) await chrome.storage.local.set({ weatherApiKey });
+      else await chrome.storage.local.remove('weatherApiKey');
+      showStatus('Settings saved successfully.');
+    } catch (error) {
+      showStatus(error.message || 'Could not save settings.', true);
+    }
+  }
+
+  async function clearApiCache() {
+    const stored = await chrome.storage.local.get(null);
+    const cacheKeys = Object.keys(stored).filter((key) => key.startsWith('cache:'));
+    if (cacheKeys.length > 0) await chrome.storage.local.remove(cacheKeys);
+    showStatus(cacheKeys.length > 0 ? 'API cache cleared.' : 'API cache is already empty.');
+  }
+
+  addLinkButton.addEventListener('click', addBookmark);
+  linkUrl.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      addBookmark();
+    }
+  });
+  form.addEventListener('submit', saveSettings);
+  clearCacheButton.addEventListener('click', clearApiCache);
+
+  loadSettings().catch(() => showStatus('Could not load existing settings.', true));
 });
