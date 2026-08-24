@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const addLinkButton = $('addLinkBtn');
   const clearCacheButton = $('clearCacheButton');
   const statusMessage = $('statusMessage');
+  // Chrome sync storage allows about 8 KiB per item. Keep headroom for
+  // serialization differences so oversized quick links fail before save.
+  const MAX_SYNC_ITEM_BYTES = 7500;
 
   const WIDGETS = [
     { id: 'weather', label: 'Weather' },
@@ -59,6 +62,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const parsed = new URL(candidate);
     if (!['https:', 'http:'].includes(parsed.protocol)) throw new Error('Only HTTP and HTTPS links are allowed.');
     return parsed.href;
+  }
+
+  function syncItemSizeBytes(key, value) {
+    return new TextEncoder().encode(`${key}${JSON.stringify(value)}`).length;
+  }
+
+  function assertBookmarksFitSyncQuota(nextBookmarks) {
+    if (syncItemSizeBytes('bookmarks', nextBookmarks) > MAX_SYNC_ITEM_BYTES) {
+      throw new Error('Quick links are too large to sync. Remove a link or shorten a URL.');
+    }
   }
 
   function renderWidgetCheckboxes(visibility = {}) {
@@ -117,7 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
         linkError.textContent = 'This URL is already in your quick links.';
         return;
       }
-      bookmarks.push({ name: name.slice(0, 40), url });
+      const nextBookmarks = [...bookmarks, { name: name.slice(0, 40), url }];
+      assertBookmarksFitSyncQuota(nextBookmarks);
+      bookmarks = nextBookmarks;
       linkName.value = '';
       linkUrl.value = '';
       renderBookmarks();
@@ -180,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     event.preventDefault();
     try {
       validateProfiles();
+      assertBookmarksFitSyncQuota(bookmarks);
       const widgetVisibility = {};
       visibilityContainer.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         widgetVisibility[checkbox.dataset.widgetId] = checkbox.checked;

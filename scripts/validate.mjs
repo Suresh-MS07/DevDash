@@ -51,6 +51,7 @@ assert(dashboardHtml.includes('dashboard.js'), 'dashboard.html must load dashboa
 assert(optionsHtml.includes('options.js'), 'options.html must load options.js.');
 assert(!dashboardJs.includes('.innerHTML'), 'dashboard.js must not inject HTML strings.');
 assert(!optionsJs.includes('.innerHTML'), 'options.js must not inject HTML strings.');
+assert(optionsJs.includes('assertBookmarksFitSyncQuota(bookmarks);'), 'Settings must guard the quick-link sync quota before saving.');
 assert(!readme.includes('google.com/search?q='), 'README contains a search-wrapped or placeholder link.');
 assert(!readme.includes('your-username'), 'README contains a username placeholder.');
 assert(!dashboardJs.includes('paste your existing functions'), 'Dashboard contains incomplete placeholder logic.');
