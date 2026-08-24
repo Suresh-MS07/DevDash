@@ -1,82 +1,84 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevDash</title>
-    <link rel="stylesheet" href="dashboard.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>DevDash</title>
+  <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
-    <canvas id="background-canvas"></canvas>
-    <a href="options.html" target="_blank" class="settings-link" title="Settings">&#9881;</a>
+  <a class="settings-link" href="options.html" target="_blank" rel="noopener" aria-label="Open DevDash settings">⚙</a>
 
-    <main id="dashboard-container">
-        
-        <div id="greeting-widget" class="widget"></div>
-        
-        <div id="weather-widget" class="widget">
-            <h3>Weather</h3>
-            <div id="weather-content" class="widget-content"></div>
-        </div>
+  <main id="dashboard-container">
+    <section id="greeting-widget" class="widget hero-widget" aria-live="polite">
+      <div class="eyebrow">DEVELOPER COMMAND CENTER</div>
+      <div class="time">--:--</div>
+      <div class="greeting">Welcome to DevDash</div>
+    </section>
 
-        <div id="github-widget" class="widget">
-            <h3><img src="github-icon.png" class="widget-icon"> GitHub Activity</h3>
-            <div id="github-content" class="widget-content"></div>
-        </div>
+    <section id="weather-widget" class="widget">
+      <h2><span aria-hidden="true">🌤</span> Weather</h2>
+      <div id="weather-content" class="widget-content" aria-live="polite"></div>
+    </section>
 
-        <div id="leetcode-widget" class="widget">
-            <h3>LeetCode Stats</h3>
-            <div id="leetcode-content" class="widget-content"></div>
-        </div>
-        
-        <div id="links-widget" class="widget">
-            <h3>Quick Links</h3>
-            <div id="links-content" class="widget-content"></div>
-        </div>
+    <section id="github-widget" class="widget">
+      <h2><span aria-hidden="true">◉</span> GitHub Activity</h2>
+      <div id="github-content" class="widget-content" aria-live="polite"></div>
+    </section>
 
-        <div id="devto-widget" class="widget">
-            <h3>Dev.to Feed</h3>
-            <div id="devto-content" class="widget-content"></div>
-        </div>
+    <section id="leetcode-widget" class="widget">
+      <h2><span aria-hidden="true">⌁</span> LeetCode Stats</h2>
+      <div id="leetcode-content" class="widget-content" aria-live="polite"></div>
+    </section>
 
-        <div id="hackernews-widget" class="widget">
-            <h3><img src="hackernews-icon.png" class="widget-icon"> Hacker News</h3>
-            <div id="hackernews-content" class="widget-content"></div>
-        </div>
+    <section id="links-widget" class="widget">
+      <h2><span aria-hidden="true">↗</span> Quick Links</h2>
+      <div id="links-content" class="widget-content"></div>
+    </section>
 
-        <div id="todo-list-widget" class="widget">
-            <h3>To-Do List</h3>
-            <div id="todo-content" class="widget-content">
-                <input type="text" id="todo-input" placeholder="Add a new task...">
-                <ul id="todo-list"></ul>
-            </div>
-        </div>
-        
-        <div id="quick-notes-widget" class="widget">
-            <h3>Quick Notes</h3>
-            <textarea id="quick-notes-content" placeholder="Jot down something..."></textarea>
-        </div>
+    <section id="devto-widget" class="widget">
+      <h2><span aria-hidden="true">DEV</span> Dev.to Feed</h2>
+      <div id="devto-content" class="widget-content" aria-live="polite"></div>
+    </section>
 
-        <div id="pomodoro-timer-widget" class="widget">
-            <h3>Pomodoro Timer</h3>
-            <div id="pomodoro-content">
-                <div id="pomodoro-timer">25:00</div>
-                <div id="pomodoro-controls">
-                    <button id="pomodoro-start">Start</button>
-                    <button id="pomodoro-reset">Reset</button>
-                </div>
-            </div>
-        </div>
+    <section id="hackernews-widget" class="widget">
+      <h2><span aria-hidden="true">Y</span> Hacker News</h2>
+      <div id="hackernews-content" class="widget-content" aria-live="polite"></div>
+    </section>
 
-        <div id="stack-overflow-widget" class="widget">
-            <h3>Stack Overflow</h3>
-            <div id="stackoverflow-content" class="widget-content"></div>
-        </div>
+    <section id="todo-list-widget" class="widget">
+      <h2><span aria-hidden="true">✓</span> To-Do List</h2>
+      <div id="todo-content" class="widget-content">
+        <label class="sr-only" for="todo-input">Add a task</label>
+        <input id="todo-input" type="text" maxlength="120" autocomplete="off" placeholder="Add a task and press Enter">
+        <ul id="todo-list" class="clean-list"></ul>
+      </div>
+    </section>
 
-    </main>
-    <script src="dashboard.js"></script>
+    <section id="quick-notes-widget" class="widget">
+      <h2><span aria-hidden="true">✎</span> Quick Notes</h2>
+      <label class="sr-only" for="quick-notes-content">Quick notes</label>
+      <textarea id="quick-notes-content" maxlength="5000" placeholder="Capture an idea, command, or reminder..."></textarea>
+    </section>
+
+    <section id="pomodoro-timer-widget" class="widget pomodoro-widget">
+      <h2><span aria-hidden="true">◷</span> Pomodoro</h2>
+      <div id="pomodoro-content">
+        <div id="pomodoro-timer" role="timer" aria-live="off">25:00</div>
+        <div class="button-row">
+          <button id="pomodoro-start" type="button">Start</button>
+          <button id="pomodoro-reset" class="button-secondary" type="button">Reset</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack-overflow-widget" class="widget">
+      <h2><span aria-hidden="true">▤</span> Stack Overflow</h2>
+      <div id="stackoverflow-content" class="widget-content" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="dashboard.js"></script>
 </body>
 </html>

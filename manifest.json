@@ -1,23 +1,29 @@
 {
   "manifest_version": 3,
-  "name": "DevDash - Developer's Dashboard",
-  "version": "1.0",
-  "description": "A personalized new tab dashboard for developers.",
+  "name": "DevDash - Developer Dashboard",
+  "version": "1.1.0",
+  "description": "A privacy-conscious new tab dashboard for developer activity, focus, and productivity.",
+  "minimum_chrome_version": "116",
   "permissions": [
     "storage"
+  ],
+  "host_permissions": [
+    "https://api.openweathermap.org/*",
+    "https://api.github.com/*",
+    "https://leetcode-api-faisal.vercel.app/*",
+    "https://dev.to/*",
+    "https://hacker-news.firebaseio.com/*",
+    "https://api.stackexchange.com/*"
   ],
   "chrome_url_overrides": {
     "newtab": "dashboard.html"
   },
-  "options_page": "options.html",
-  "icons": {
-    "48": "icon.png"
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
   },
-  "host_permissions": [
-    "https://api.openweathermap.org/",
-    "https://api.github.com/",
-    "https://leetcode-stats-api.herokuapp.com/",
-    "https://dev.to/",
-    "https://hacker-news.firebaseio.com/"
-  ]
+  "icons": {
+    "48": "icon.png",
+    "128": "icon.png"
+  }
 }
